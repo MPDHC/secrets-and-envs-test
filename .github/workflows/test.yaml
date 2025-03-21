@@ -1,0 +1,14 @@
+on: push
+
+jobs:
+  test:
+    runs-on: alpine:latest
+    steps:
+      - name: echo secrets
+        run: |
+          echo "" > .env
+          echo "AUTHENTIK_CLIENT_ID=${{ secrets.AUTHENTIK_CLIENT_ID }}" >>.env
+          echo "AUTHENTIK_CLIENT_SECRET=${{ secrets.AUTHENTIK_CLIENT_SECRET }}" >>.env
+          echo "AUTHENTIK_SERVER_ADDRESS=${{ secrets.AUTHENTIK_SERVER_ADDRESS }}" >>.env
+          echo "AUTHENTIK_SERVER_PORT=${{ secrets.AUTHENTIK_SERVER_PORT }}" >>.env
+          cat .env
