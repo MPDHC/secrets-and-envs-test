@@ -4,11 +4,15 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     steps:
-      - name: echo secrets
+      - name: save secrets into .env
         run: |
           echo "" > .env
           echo "AUTHENTIK_CLIENT_ID=${{ secrets.AUTHENTIK_CLIENT_ID }}" >>.env
           echo "AUTHENTIK_CLIENT_SECRET=${{ secrets.AUTHENTIK_CLIENT_SECRET }}" >>.env
           echo "AUTHENTIK_SERVER_ADDRESS=${{ secrets.AUTHENTIK_SERVER_ADDRESS }}" >>.env
           echo "AUTHENTIK_SERVER_PORT=${{ secrets.AUTHENTIK_SERVER_PORT }}" >>.env
-          cat .env
+      - name: upload .env to infisical
+        run: |
+          INFISICAL_ENVIRONMENT=dev
+          INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id=${{ secrets.MP_INFISICAL_CLIENT_ID }} --client-secret=${{ secrets.MP_INFISICAL_CLIENT_SECRET }} --plain --silent)
+          infisical secrets set --env=$INFISICAL_ENVIRONMENT --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} --token=$INFISICAL_TOKEN $(cat .env)
