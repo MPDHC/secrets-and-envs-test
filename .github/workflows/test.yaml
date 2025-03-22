@@ -25,6 +25,7 @@ jobs:
         run: |
           infisical secrets set \
             --env=dev \
+            --domain=${{ secrets.INFISICAL_DOMAIN }}
             --token=${{ secrets.INFISICAL_SERVICE_TOKEN_DEV }} \
             --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} \
             --file="./.env"
