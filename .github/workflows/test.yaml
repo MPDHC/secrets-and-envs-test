@@ -23,8 +23,7 @@ jobs:
       - name: Upload .env to infisical
         run: |
           infisical secrets set \
-            --env=dev \
-            --path=/repo \
+            --env=stag \
             --domain=${{ secrets.INFISICAL_DOMAIN }} \
             --token=${{ secrets.INFISICAL_SERVICE_TOKEN_DEV }} \
             --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} \
@@ -54,7 +53,6 @@ jobs:
         run: |
           infisical secrets set \
             --env=dev \
-            --path=/repo-env \
             --domain=${{ secrets.INFISICAL_DOMAIN }} \
             --token=${{ secrets.INFISICAL_SERVICE_TOKEN_DEV }} \
             --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} \
@@ -84,7 +82,6 @@ jobs:
         run: |
           infisical secrets set \
             --env=prod \
-            --path=/repo-env \
             --domain=${{ secrets.INFISICAL_DOMAIN }} \
             --token=${{ secrets.INFISICAL_SERVICE_TOKEN_DEV }} \
             --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} \
