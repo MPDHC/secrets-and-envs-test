@@ -28,19 +28,19 @@ jobs:
             --domain=${{ secrets.INFISICAL_DOMAIN }} \
             --token=${{ secrets.INFISICAL_SERVICE_TOKEN }} \
             --projectId=${{ secrets.INFISICAL_PROJECT_ID }} \
-            $(cat .env)
+            --file=./.env
 
   repo-env-dev:
     runs-on: ubuntu-24.04
     environment: development
     steps:
-      - name: Save secrets into .env
+      - name: Save secrets into .env.dev
         run: |
-          echo "" > .env
-          echo "AUTHENTIK_CLIENT_ID=${{ secrets.AUTHENTIK_CLIENT_ID }}" >>.env
-          echo "AUTHENTIK_CLIENT_SECRET=${{ secrets.AUTHENTIK_CLIENT_SECRET }}" >>.env
-          echo "AUTHENTIK_SERVER_ADDRESS=${{ secrets.AUTHENTIK_SERVER_ADDRESS }}" >>.env
-          echo "AUTHENTIK_SERVER_PORT=${{ secrets.AUTHENTIK_SERVER_PORT }}" >>.env
+          echo "" > .env.dev
+          echo "AUTHENTIK_CLIENT_ID=${{ secrets.AUTHENTIK_CLIENT_ID }}" >>.env.dev
+          echo "AUTHENTIK_CLIENT_SECRET=${{ secrets.AUTHENTIK_CLIENT_SECRET }}" >>.env.dev
+          echo "AUTHENTIK_SERVER_ADDRESS=${{ secrets.AUTHENTIK_SERVER_ADDRESS }}" >>.env.dev
+          echo "AUTHENTIK_SERVER_PORT=${{ secrets.AUTHENTIK_SERVER_PORT }}" >>.env.dev
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -58,19 +58,19 @@ jobs:
             --domain=${{ secrets.INFISICAL_DOMAIN }} \
             --token=${{ secrets.INFISICAL_SERVICE_TOKEN }} \
             --projectId=${{ secrets.INFISICAL_PROJECT_ID }} \
-            $(cat .env)
+            --file=./.env.dev
 
   repo-env-prod:
     runs-on: ubuntu-24.04
     environment: production
     steps:
-      - name: Save secrets into .env
+      - name: Save secrets into .env.prod
         run: |
-          echo "" > .env
-          echo "AUTHENTIK_CLIENT_ID=${{ secrets.AUTHENTIK_CLIENT_ID }}" >>.env
-          echo "AUTHENTIK_CLIENT_SECRET=${{ secrets.AUTHENTIK_CLIENT_SECRET }}" >>.env
-          echo "AUTHENTIK_SERVER_ADDRESS=${{ secrets.AUTHENTIK_SERVER_ADDRESS }}" >>.env
-          echo "AUTHENTIK_SERVER_PORT=${{ secrets.AUTHENTIK_SERVER_PORT }}" >>.env
+          echo "" > .env.prod
+          echo "AUTHENTIK_CLIENT_ID=${{ secrets.AUTHENTIK_CLIENT_ID }}" >>.env.prod
+          echo "AUTHENTIK_CLIENT_SECRET=${{ secrets.AUTHENTIK_CLIENT_SECRET }}" >>.env.prod
+          echo "AUTHENTIK_SERVER_ADDRESS=${{ secrets.AUTHENTIK_SERVER_ADDRESS }}" >>.env.prod
+          echo "AUTHENTIK_SERVER_PORT=${{ secrets.AUTHENTIK_SERVER_PORT }}" >>.env.prod
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -88,4 +88,4 @@ jobs:
             --domain=${{ secrets.INFISICAL_DOMAIN }} \
             --token=${{ secrets.INFISICAL_SERVICE_TOKEN }} \
             --projectId=${{ secrets.INFISICAL_PROJECT_ID }} \
-            $(cat .env)
+            --file=./.env.prod
