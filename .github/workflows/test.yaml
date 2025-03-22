@@ -23,10 +23,11 @@ jobs:
       - name: Upload .env to infisical
         run: |
           infisical secrets set \
-            --env=stag \
+            --env= \
+            --path=/repo \
             --domain=${{ secrets.INFISICAL_DOMAIN }} \
-            --token=${{ secrets.INFISICAL_SERVICE_TOKEN_DEV }} \
-            --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} \
+            --token=${{ secrets.INFISICAL_SERVICE_TOKEN }} \
+            --projectId=${{ secrets.INFISICAL_PROJECT_ID }} \
             $(cat .env)
 
   repo-env-dev:
@@ -53,9 +54,10 @@ jobs:
         run: |
           infisical secrets set \
             --env=dev \
+            --path=/repo-env \
             --domain=${{ secrets.INFISICAL_DOMAIN }} \
-            --token=${{ secrets.INFISICAL_SERVICE_TOKEN_DEV }} \
-            --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} \
+            --token=${{ secrets.INFISICAL_SERVICE_TOKEN }} \
+            --projectId=${{ secrets.INFISICAL_PROJECT_ID }} \
             $(cat .env)
 
   repo-env-prod:
@@ -82,7 +84,8 @@ jobs:
         run: |
           infisical secrets set \
             --env=prod \
+            --path=/repo-env \
             --domain=${{ secrets.INFISICAL_DOMAIN }} \
-            --token=${{ secrets.INFISICAL_SERVICE_TOKEN_DEV }} \
-            --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} \
+            --token=${{ secrets.INFISICAL_SERVICE_TOKEN }} \
+            --projectId=${{ secrets.INFISICAL_PROJECT_ID }} \
             $(cat .env)
