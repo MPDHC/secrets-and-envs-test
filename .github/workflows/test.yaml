@@ -25,4 +25,4 @@ jobs:
         run: |
           INFISICAL_ENVIRONMENT=dev
           INFISICAL_TOKEN=$(infisical login --method=universal-auth --domain=${{ secrets.MP_INFISICAL_DOMAIN }} --client-id=${{ secrets.MP_INFISICAL_CLIENT_ID }} --client-secret=${{ secrets.MP_INFISICAL_CLIENT_SECRET }} --plain --silent)
-          infisical secrets set --env=$INFISICAL_ENVIRONMENT --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} --token=$INFISICAL_TOKEN --file="./.env"
+          infisical secrets set --env=$INFISICAL_ENVIRONMENT --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} --file="./.env"
