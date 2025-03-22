@@ -28,7 +28,7 @@ jobs:
             --domain=${{ secrets.INFISICAL_DOMAIN }} \
             --token=${{ secrets.INFISICAL_SERVICE_TOKEN_DEV }} \
             --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} \
-            --file="./.env"
+            $(cat .env)
 
   repo-env-dev:
     runs-on: ubuntu-24.04
@@ -58,7 +58,7 @@ jobs:
             --domain=${{ secrets.INFISICAL_DOMAIN }} \
             --token=${{ secrets.INFISICAL_SERVICE_TOKEN_DEV }} \
             --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} \
-            --file="./.env"
+            $(cat .env)
 
   repo-env-prod:
     runs-on: ubuntu-24.04
@@ -88,4 +88,4 @@ jobs:
             --domain=${{ secrets.INFISICAL_DOMAIN }} \
             --token=${{ secrets.INFISICAL_SERVICE_TOKEN_DEV }} \
             --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} \
-            --file="./.env"
+            $(cat .env)
