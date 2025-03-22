@@ -4,14 +4,24 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     steps:
-      - name: save secrets into .env
+
+      - name: Save secrets into .env
         run: |
           echo "" > .env
           echo "AUTHENTIK_CLIENT_ID=${{ secrets.AUTHENTIK_CLIENT_ID }}" >>.env
           echo "AUTHENTIK_CLIENT_SECRET=${{ secrets.AUTHENTIK_CLIENT_SECRET }}" >>.env
           echo "AUTHENTIK_SERVER_ADDRESS=${{ secrets.AUTHENTIK_SERVER_ADDRESS }}" >>.env
           echo "AUTHENTIK_SERVER_PORT=${{ secrets.AUTHENTIK_SERVER_PORT }}" >>.env
-      - name: upload .env to infisical
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '23'
+
+      - name: Install Infisical CLI
+        run: npm install -g @infisical/cli
+
+      - name: Upload .env to infisical
         run: |
           INFISICAL_ENVIRONMENT=dev
           INFISICAL_TOKEN=$(infisical login --method=universal-auth --client-id=${{ secrets.MP_INFISICAL_CLIENT_ID }} --client-secret=${{ secrets.MP_INFISICAL_CLIENT_SECRET }} --plain --silent)
