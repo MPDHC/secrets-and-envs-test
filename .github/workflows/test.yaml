@@ -24,6 +24,5 @@ jobs:
       - name: Upload .env to infisical
         run: |
           INFISICAL_ENVIRONMENT=dev
-          INFISICAL_TOKEN=$(infisical login --method=universal-auth --domain=${{ secrets.MP_INFISICAL_DOMAIN }} --client-id=${{ secrets.MP_INFISICAL_CLIENT_ID }} --client-secret=${{ secrets.MP_INFISICAL_CLIENT_SECRET }} --plain --silent)
-          infisical secrets --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }}
+          INFISICAL_TOKEN=$(infisical login --method=universal-auth --domain=${{ secrets.MP_INFISICAL_DOMAIN }} --projectId=${{ secrets.MP_INFISICAL_PROJECT_ID }} --client-id=${{ secrets.MP_INFISICAL_CLIENT_ID }} --client-secret=${{ secrets.MP_INFISICAL_CLIENT_SECRET }} --plain --silent)
           infisical secrets set --env=$INFISICAL_ENVIRONMENT --file="./.env"
