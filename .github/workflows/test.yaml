@@ -1,91 +1,19 @@
 on: push
 
 jobs:
-  repo:
+  test-infisical:
     runs-on: ubuntu-24.04
     steps:
+      - name: infisical
+        id: infisical
+        uses: MPDHC/infisical@v2
+        with:
+          domain: ${{ secrets.INFISICAL_DOMAIN }}
+          token: ${{ secrets.INFISICAL_SERVICE_TOKEN }}
+          project-id: ${{ secrets.INFISICAL_PROJECT_ID }}
+          recursive: true
+
       - name: Save secrets into .env
         run: |
-          echo "" > .env
-          echo "AUTHENTIK_CLIENT_ID=${{ secrets.AUTHENTIK_CLIENT_ID }}" >>.env
-          echo "AUTHENTIK_CLIENT_SECRET=${{ secrets.AUTHENTIK_CLIENT_SECRET }}" >>.env
-          echo "AUTHENTIK_SERVER_ADDRESS=${{ secrets.AUTHENTIK_SERVER_ADDRESS }}" >>.env
-          echo "AUTHENTIK_SERVER_PORT=${{ secrets.AUTHENTIK_SERVER_PORT }}" >>.env
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "23"
-
-      - name: Install Infisical CLI
-        run: npm install -g @infisical/cli
-
-      - name: Upload .env to infisical
-        run: |
-          infisical secrets set \
-            --env=dev \
-            --path=/repo \
-            --domain=${{ secrets.INFISICAL_DOMAIN }} \
-            --token=${{ secrets.INFISICAL_SERVICE_TOKEN }} \
-            --projectId=${{ secrets.INFISICAL_PROJECT_ID }} \
-            --file=./.env
-
-  repo-env-dev:
-    runs-on: ubuntu-24.04
-    environment: development
-    steps:
-      - name: Save secrets into .env
-        run: |
-          echo "" > .env
-          echo "AUTHENTIK_CLIENT_ID=${{ secrets.AUTHENTIK_CLIENT_ID }}" >>.env
-          echo "AUTHENTIK_CLIENT_SECRET=${{ secrets.AUTHENTIK_CLIENT_SECRET }}" >>.env
-          echo "AUTHENTIK_SERVER_ADDRESS=${{ secrets.AUTHENTIK_SERVER_ADDRESS }}" >>.env
-          echo "AUTHENTIK_SERVER_PORT=${{ secrets.AUTHENTIK_SERVER_PORT }}" >>.env
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "23"
-
-      - name: Install Infisical CLI
-        run: npm install -g @infisical/cli
-
-      - name: Upload .env to infisical
-        run: |
-          infisical secrets set \
-            --env=dev \
-            --path=/repo-env \
-            --domain=${{ secrets.INFISICAL_DOMAIN }} \
-            --token=${{ secrets.INFISICAL_SERVICE_TOKEN }} \
-            --projectId=${{ secrets.INFISICAL_PROJECT_ID }} \
-            --file=./.env
-
-  repo-env-prod:
-    runs-on: ubuntu-24.04
-    environment: production
-    steps:
-      - name: Save secrets into .env
-        run: |
-          echo "" > .env
-          echo "AUTHENTIK_CLIENT_ID=${{ secrets.AUTHENTIK_CLIENT_ID }}" >>.env
-          echo "AUTHENTIK_CLIENT_SECRET=${{ secrets.AUTHENTIK_CLIENT_SECRET }}" >>.env
-          echo "AUTHENTIK_SERVER_ADDRESS=${{ secrets.AUTHENTIK_SERVER_ADDRESS }}" >>.env
-          echo "AUTHENTIK_SERVER_PORT=${{ secrets.AUTHENTIK_SERVER_PORT }}" >>.env
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "23"
-
-      - name: Install Infisical CLI
-        run: npm install -g @infisical/cli
-
-      - name: Upload .env to infisical
-        run: |
-          infisical secrets set \
-            --env=prod \
-            --path=/repo-env \
-            --domain=${{ secrets.INFISICAL_DOMAIN }} \
-            --token=${{ secrets.INFISICAL_SERVICE_TOKEN }} \
-            --projectId=${{ secrets.INFISICAL_PROJECT_ID }} \
-            --file=./.env
+          echo "AUTHENTIK_CLIENT_ID=${{ steps.infisical.outputs.AUTHENTIK_CLIENT_ID }}"
+          echo "AUTHENTIK_CLIENT_SECRET=${{ steps.infisical.outputs.AUTHENTIK_CLIENT_SECRET }}"
